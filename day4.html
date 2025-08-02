@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📜 DZIEŃ 4 – Cisza ma głos</title>
+  <style>
+    /* Podstawowe style */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Courier New', monospace;
+      background: #000 url('https://i.imgur.com/xhDqJvI.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+      background: rgba(10,10,10,0.85);
+      border-radius: 12px;
+      box-shadow: 0 0 30px #aaa;
+      user-select: none;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ccc;
+      text-shadow: 0 0 8px #fff;
+      animation: flickerText 2s infinite alternate;
+    }
+    p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+      color: #ddd;
+      text-shadow: 0 0 6px #999;
+    }
+    strong {
+      color: #fff;
+    }
+
+    @keyframes flickerText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Animacja tekstu szeptem z dołu */
+    .whisper {
+      position: relative;
+      animation: whisperUp 6s ease-in-out infinite;
+      opacity: 0.7;
+      color: #bbb;
+      font-style: italic;
+      text-shadow:
+        0 0 5px #bbb,
+        0 0 10px #ccc;
+      user-select: none;
+    }
+    @keyframes whisperUp {
+      0% { transform: translateY(15px); opacity: 0; }
+      50% { transform: translateY(0); opacity: 0.7; }
+      100% { transform: translateY(-15px); opacity: 0; }
+    }
+
+    /* Białe szumy na całej stronie */
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif') repeat;
+      opacity: 0.1;
+      z-index: 5;
+      mix-blend-mode: screen;
+      animation: noiseAnim 0.2s steps(2) infinite;
+    }
+    @keyframes noiseAnim {
+      0%, 100% { background-position: 0 0; }
+      50% { background-position: 100% 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="container" id="content">
+    <h1>📜 DZIEŃ 4 – Cisza ma głos</h1>
+    <p><strong>Zapis nagrania z mikrofonu:</strong><br />
+      „W pokoju... było za cicho. Tak bardzo, że słyszałem bicie własnego serca. A potem... w tej ciszy... głos. Kobiecy. Mówiła moje imię. Trzy razy. Zanim przestałem słyszeć cokolwiek.”</p>
+    <p><strong>Na ekranie monitora pojawił się napis:</strong> 5IL3NC3.</p>
+    <p class="whisper">„Mów moje imię... mów moje imię... mów moje imię...”</p>
+  </div>
+
+  <!-- Dźwięk białych szumów -->
+  <audio id="whiteNoise" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2021/12/23/audio_17c7e99603.mp3?filename=white-noise-ambient-112654.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    // Stopniowe wyciszenie całej strony (audio + treść) po 20 sekundach
+    const audio = document.getElementById('whiteNoise');
+    const content = document.getElementById('content');
+
+    function fadeOut() {
+      let vol = 1;
+      let opacity = 1;
+      const interval = setInterval(() => {
+        vol -= 0.02;
+        opacity -= 0.02;
+        if (vol <= 0) {
+          vol = 0;
+          opacity = 0;
+          clearInterval(interval);
+        }
+        audio.volume = vol;
+        content.style.opacity = opacity;
+      }, 100);
+    }
+
+    // Wywołaj fadeOut po 20 sekundach od załadowania strony
+    setTimeout(fadeOut, 20000);
+  </script>
+</body>
+</html>

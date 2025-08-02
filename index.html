@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>⚠️ SYSTEM NIEAUTORYZOWANY</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #ff0033;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background-image: radial-gradient(circle, #000 60%, #1a0000);
+    }
+
+    #container {
+      text-align: center;
+      max-width: 800px;
+      padding: 40px;
+    }
+
+    #loginBtn {
+      padding: 15px 40px;
+      font-size: 22px;
+      background: transparent;
+      border: 2px solid #ff0033;
+      color: #ff0033;
+      cursor: pointer;
+      border-radius: 6px;
+      animation: flicker 1s infinite;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .logLine {
+      display: none;
+      margin: 10px 0;
+      color: #ff0033;
+      font-size: 17px;
+      text-shadow: 0 0 8px #ff0000;
+      animation: glitch 0.3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      100% { transform: translate(1px, -1px); }
+    }
+
+    #done {
+      display: none;
+      margin-top: 40px;
+      color: #00ff99;
+      font-size: 22px;
+      animation: pulse 0.8s infinite alternate, shake 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(1.1); opacity: 0.6; }
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-2px, 1px); }
+      50% { transform: translate(2px, -1px); }
+      75% { transform: translate(-1px, 2px); }
+      100% { transform: translate(1px, -2px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <button id="loginBtn">ZALOGUJ SIĘ</button>
+
+    <div id="logArea">
+      <div class="logLine">[1/10] Łamanie poświadczeń...</div>
+      <div class="logLine">[2/10] Utracono kontrolę nad połączeniem...</div>
+      <div class="logLine">[3/10] Wstrzyknięcie pakietu: ██████</div>
+      <div class="logLine">[4/10] Ominięcie czujników ─ SUKCES</div>
+      <div class="logLine">[5/10] Wgląd w niedozwolone sektory</div>
+      <div class="logLine">[6/10] TRANSFER: nieznane dane (ID: ??)</div>
+      <div class="logLine">[7/10] Cienie odpowiedziały...</div>
+      <div class="logLine">[8/10] Zdejmowanie osłon świadomości...</div>
+      <div class="logLine">[9/10] ??? ERROR — ZAPIS ŚWIADOMOŚCI</div>
+      <div class="logLine">[10/10] Jesteś obserwowany.</div>
+    </div>
+
+    <div id="done">👁️ DOSTĘP PRZYZNANY. UCIEKAJ.</div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const logLines = document.querySelectorAll('.logLine');
+    const done = document.getElementById('done');
+
+    loginBtn.addEventListener('click', () => {
+      loginBtn.style.display = 'none';
+
+      logLines.forEach((line, index) => {
+        setTimeout(() => {
+          line.style.display = 'block';
+        }, 700 * index);
+      });
+
+      setTimeout(() => {
+        done.style.display = 'block';
+      }, 700 * logLines.length + 500);
+
+      setTimeout(() => {
+        window.location.href = "zalogowany.html";
+      }, 700 * logLines.length + 4000);
+    });
+  </script>
+
+</body>
+</html>

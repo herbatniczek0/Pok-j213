@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WYBIERZ DZIEŃ</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      color: #ff0000;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      animation: backgroundFlicker 5s infinite;
+    }
+
+    @keyframes backgroundFlicker {
+      0%, 100% { background-color: #000; }
+      45% { background-color: #0a0a0a; }
+      55% { background-color: #000; }
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 50px;
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+      animation: textFlicker 1.5s infinite;
+    }
+
+    @keyframes textFlicker {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.5; }
+      50% { opacity: 0.2; }
+      55% { opacity: 0.5; }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+    }
+
+    .buttons button {
+      background: transparent;
+      border: 2px solid #ff0000;
+      color: #ff0000;
+      padding: 20px 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .buttons button:hover {
+      background-color: #ff0000;
+      color: #000;
+      text-shadow: none;
+    }
+
+    .buttons button::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border: 1px dashed #ff000055;
+      animation: glow 2s infinite ease-in-out;
+      z-index: -1;
+    }
+
+    @keyframes glow {
+      0% { opacity: 0.2; }
+      50% { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+  <h1>WYBIERZ DZIEŃ</h1>
+  <div class="buttons">
+    <button onclick="location.href='day1.html'">Dzień 1</button>
+    <button onclick="location.href='day2.html'">Dzień 2</button>
+    <button onclick="location.href='day3.html'">Dzień 3</button>
+    <button onclick="location.href='day4.html'">Dzień 4</button>
+    <button onclick="location.href='day5.html'">Dzień 5</button>
+  </div>
+</body>
+</html>

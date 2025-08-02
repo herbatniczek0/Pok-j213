@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📜 DZIEŃ 3 – Lustro nie odbijało</title>
+  <style>
+    /* Podstawowe style */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Courier New', monospace;
+      background: #111; /* ciemne tło bez wideo */
+      color: #eee;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 3rem;
+      background: rgba(10,10,10,0.85);
+      border-radius: 12px;
+      box-shadow: 0 0 30px #bb0000aa;
+      user-select: none;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ff1b1b;
+      text-shadow: 0 0 15px #ff0000;
+      animation: flickerText 1.5s infinite alternate;
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+      color: #ddd;
+      text-shadow: 0 0 6px #990000;
+    }
+    strong {
+      color: #ff3c3c;
+    }
+    @keyframes flickerText {
+      0%, 100% {opacity: 1;}
+      45% {opacity: 0.6;}
+      50% {opacity: 0.2;}
+      55% {opacity: 0.6;}
+    }
+
+    /* Ciemność z napisem */
+    .dark-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: white;
+      font-family: 'Courier New', monospace;
+      font-size: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      z-index: 100;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Trzęsienie strony */
+    @keyframes shake {
+      0%, 100% { transform: translate(0,0); }
+      10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 5px); }
+      20%, 40%, 60%, 80% { transform: translate(5px, -5px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="content">
+    <h1>📜 DZIEŃ 3 – Lustro nie odbijało</h1>
+    <p><strong>Raport technika:</strong><br />
+      „W pokoju 213 lustro nie odbijało osoby stojącej przed nim. Gdy zgasło światło, w odbiciu widać było coś... poruszającego się z tyłu. Nie było tam nikogo.”</p>
+    <p><strong>Wygrawerowane w ramie lustra:</strong> V01D</p>
+  </div>
+
+  <div class="dark-overlay" id="darkOverlay">Nie jesteś sam</div>
+
+  <script>
+    // Trzęsienie strony
+    function shakePage() {
+      const content = document.getElementById('content');
+      content.style.animation = 'shake 0.6s';
+      content.addEventListener('animationend', () => {
+        content.style.animation = '';
+      }, {once: true});
+    }
+
+    // Pojawianie ciemności z napisem na 2 sekund co 20 sekund
+    const darkOverlay = document.getElementById('darkOverlay');
+    function showDarkOverlay() {
+      darkOverlay.style.opacity = '1';
+      darkOverlay.style.pointerEvents = 'auto';
+      shakePage();
+      setTimeout(() => {
+        darkOverlay.style.opacity = '0';
+        darkOverlay.style.pointerEvents = 'none';
+      }, 2000);
+    }
+
+    // Pierwsze wywołanie po 20 sekundach, potem co 20 sekund
+    setTimeout(() => {
+      showDarkOverlay();
+      setInterval(showDarkOverlay, 5000);
+    }, 5000);
+  </script>
+</body>
+</html>

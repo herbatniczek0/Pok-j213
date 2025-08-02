@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Odblokowanie kolejnego dnia</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Courier New', monospace;
+    background: #0a0a0a;
+    color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    user-select: none;
+  }
+  .container {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 3rem 4rem;
+    border-radius: 15px;
+    box-shadow: 0 0 25px #aa0000cc;
+    max-width: 480px;
+  }
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #ff4444;
+    text-shadow: 0 0 12px #ff0000;
+    user-select: text;
+  }
+  p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #ddd;
+    margin-bottom: 2rem;
+    user-select: text;
+  }
+  .date {
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: #ff6666;
+    text-shadow: 0 0 8px #ff2222;
+    user-select: text;
+  }
+</style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Informacja o odblokowaniu kolejnego dnia">
+    <h1>Kolejny dzień odblokuje się</h1>
+    <p>Uwaga! Następna część zostanie udostępniona dopiero:</p>
+    <div class="date" id="unlockDate">XX XX 2025, godzina 02:13</div>
+  </div>
+</body>
+</html>

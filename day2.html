@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📜 DZIEŃ 2 – Nie otwieraj drzwi</title>
+  <style>
+    /* Podstawowe style */
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Courier New', monospace;
+      background: #080808 url('https://i.imgur.com/xhDqJvI.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #f2f2f2;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .panel {
+      background-color: rgba(10,10,10,0.85);
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      max-width: 800px;
+      box-shadow: 0 0 30px #ff0000aa;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ff1b1b;
+      text-shadow: 0 0 15px #ff0000;
+      animation: flickerText 1.5s infinite alternate;
+      user-select: none;
+    }
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 0 6px #990000;
+      user-select: none;
+      animation: glitchShift 3s infinite;
+      position: relative;
+    }
+    strong {
+      color: #ff3c3c;
+    }
+    /* Migotanie tytułu */
+    @keyframes flickerText {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.6; }
+      50% { opacity: 0.2; }
+      55% { opacity: 0.6; }
+    }
+    /* Efekt przesunięcia tekstu jak zepsuty monitor */
+    @keyframes glitchShift {
+      0% {
+        left: 0;
+        text-shadow:
+          2px 0 red,
+          -2px 0 cyan;
+      }
+      20% {
+        left: 2px;
+        text-shadow:
+          3px 0 red,
+          -1px 0 cyan;
+      }
+      40% {
+        left: -2px;
+        text-shadow:
+          1px 0 red,
+          -3px 0 cyan;
+      }
+      60% {
+        left: 1px;
+        text-shadow:
+          2px 0 red,
+          -2px 0 cyan;
+      }
+      80% {
+        left: -1px;
+        text-shadow:
+          3px 0 red,
+          -1px 0 cyan;
+      }
+      100% {
+        left: 0;
+        text-shadow:
+          2px 0 red,
+          -2px 0 cyan;
+      }
+    }
+    /* Czerwone oczy */
+    .eyes {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      width: 180px;
+      height: 80px;
+      margin-left: -90px;
+      background: url('https://i.imgur.com/LkHj6Nc.png') no-repeat center center;
+      background-size: contain;
+      opacity: 0;
+      animation: eyesAppear 8s infinite;
+      z-index: 20;
+      pointer-events: none;
+      filter: drop-shadow(0 0 8px #ff0000);
+    }
+    @keyframes eyesAppear {
+      0%, 40%, 50%, 100% { opacity: 0; }
+      45%, 48% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="panel" role="main" aria-label="Opis dnia 2">
+    <h1>📜 DZIEŃ 2 – Nie otwieraj drzwi</h1>
+    <p><strong>Dźwięk z rejestratora audio:</strong><br />
+      „Drzwi... one były otwarte. Ale... przecież miały nie istnieć. W środku był... hałas. Krzyki, jakby... dzieci?”</p>
+    <p><strong>Na ścianie pokoju 213 ktoś napisał „N208” krwią.</strong> Nie wiadomo, co to znaczy.</p>
+  </div>
+
+  <div class="eyes" aria-hidden="true"></div>
+
+  <!-- Cichy dźwięk płaczu w tle -->
+  <audio autoplay loop volume="0.1">
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_b9d9f3a5a3.mp3?filename=ghostly-sound-crying-10013.mp3" type="audio/mpeg" />
+  </audio>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>📜 DZIEŃ 5 – Echo śmierci</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Courier New', monospace;
+    background: #111;
+    color: #eee;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    user-select: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .container {
+    max-width: 800px;
+    background: rgba(0,0,0,0.85);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 0 40px #fff;
+    z-index: 10;
+    position: relative;
+    animation: glitch 3s infinite;
+    transition: box-shadow 0.5s ease, color 0.5s ease;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #f0f0f0;
+    text-shadow: 0 0 10px #fff;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 4px #aaa;
+  }
+
+  strong {
+    color: #ff5555;
+  }
+
+  @keyframes glitch {
+    0% {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0);
+      filter: none;
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+    }
+    20% {
+      clip-path: inset(10% 0 80% 0);
+      transform: translate(-5px, -3px);
+      filter: hue-rotate(10deg);
+      text-shadow:
+        -2px 0 red,
+        2px 0 cyan;
+    }
+    40% {
+      clip-path: inset(50% 0 10% 0);
+      transform: translate(5px, 3px);
+      filter: hue-rotate(-10deg);
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+    }
+    60% {
+      clip-path: inset(20% 0 70% 0);
+      transform: translate(-3px, 2px);
+      filter: hue-rotate(15deg);
+      text-shadow:
+        -2px 0 red,
+        2px 0 cyan;
+    }
+    80% {
+      clip-path: inset(10% 0 80% 0);
+      transform: translate(3px, -2px);
+      filter: hue-rotate(-15deg);
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+    }
+    100% {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0);
+      filter: none;
+      text-shadow:
+        2px 0 red,
+        -2px 0 cyan;
+    }
+  }
+
+  @keyframes flashBG {
+    0%, 100% { background-color: #111; }
+    50% { background-color: #fff; }
+  }
+
+  body.flash-bg {
+    animation: flashBG 1s infinite;
+  }
+
+  /* Tryb bez migania */
+  body.no-flash {
+    animation: none !important;
+    background-color: #111 !important;
+    color: #eee !important;
+  }
+  body.no-flash .container {
+    animation: none !important;
+    box-shadow: 0 0 20px #555 !important;
+    color: #eee !important;
+    text-shadow: none !important;
+  }
+
+  /* Przycisk trybu */
+  #toggleFlash {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: #222;
+    border: 2px solid #ff5555;
+    color: #ff5555;
+    font-family: monospace;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 200;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  #toggleFlash:hover {
+    background: #ff5555;
+    color: #222;
+  }
+</style>
+</head>
+<body>
+  <button id="toggleFlash" aria-pressed="true" aria-label="Wyłącz migające efekty">Tryb bez migania</button>
+
+  <div class="container" role="main" aria-label="Opis dnia 5">
+    <h1>📜 DZIEŃ 5 – Echo śmierci</h1>
+    <p><strong>Ostatni raport służb technicznych:</strong><br/>
+    „Pokój 213 wysłał sygnał dźwiękowy na częstotliwości 2.13 MHz. Brak źródła emisji. Każdy, kto go słuchał, miał później halucynacje.”</p>
+    <p><strong>Na podłodze:</strong><br/>
+    „Słyszysz? To twoje echo...”<br/>
+    <strong>Kod:</strong> ECH0-213</p>
+  </div>
+
+  <audio id="distortedAudio" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/02/22/audio_3766ccf825.mp3?filename=distorted-voice-effect-1370.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const body = document.body;
+    const container = document.querySelector('.container');
+    const toggleBtn = document.getElementById('toggleFlash');
+    const audio = document.getElementById('distortedAudio');
+
+    // Start w trybie bez migania, potem po 2s przełącz na migający (chyba że user wyłączy)
+    function enableNoFlash() {
+      body.classList.add('no-flash');
+      body.classList.remove('flash-bg');
+      toggleBtn.textContent = 'Tryb migający';
+      toggleBtn.setAttribute('aria-pressed', 'true');
+      container.style.animation = 'none';
+      audio.volume = 0.15;
+    }
+
+    function enableFlash() {
+      body.classList.remove('no-flash');
+      body.classList.add('flash-bg');
+      toggleBtn.textContent = 'Tryb bez migania';
+      toggleBtn.setAttribute('aria-pressed', 'false');
+      container.style.animation = '';
+      audio.volume = 1;
+    }
+
+    // Na start wymuszone no-flash
+    enableNoFlash();
+
+    // Po 2 sekundach, jeśli user nie zmienił trybu, włącz miganie
+    setTimeout(() => {
+      if (body.classList.contains('no-flash') && toggleBtn.getAttribute('aria-pressed') === 'true') {
+        enableFlash();
+        localStorage.setItem('noFlashMode', 'false');
+      }
+    }, 2000);
+
+    // Obsługa przycisku i localStorage
+    function loadMode() {
+      const noFlash = localStorage.getItem('noFlashMode') === 'true';
+      if (noFlash) {
+        enableNoFlash();
+      } else {
+        enableFlash();
+      }
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      if (body.classList.contains('no-flash')) {
+        localStorage.setItem('noFlashMode', 'false');
+        enableFlash();
+      } else {
+        localStorage.setItem('noFlashMode', 'true');
+        enableNoFlash();
+      }
+    });
+
+    // Załaduj stan z localStorage jeśli jest (nadpisze startowy no-flash)
+    window.addEventListener('load', loadMode);
+  </script>
+</body>
+</html>

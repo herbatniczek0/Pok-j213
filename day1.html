@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📜 DZIEŃ 1 – Coś przyszło o 2:13</title>
+  <style>
+    /* Podstawowe style i font */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: #121212 url('https://i.imgur.com/xhDqJvI.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #eee;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+
+    /* Półprzezroczysty ciemny panel na treść */
+    .panel {
+      background-color: rgba(10, 10, 10, 0.85);
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      max-width: 800px;
+      box-shadow: 0 0 30px #ff0000aa;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ff1b1b;
+      text-shadow: 0 0 15px #ff0000;
+      animation: flickerText 1.5s infinite alternate;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+      text-shadow: 0 0 6px #990000;
+    }
+
+    strong {
+      color: #ff3c3c;
+    }
+
+    /* Animacja migotania tekstu */
+    @keyframes flickerText {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.6; }
+      50% { opacity: 0.2; }
+      55% { opacity: 0.6; }
+    }
+
+    /* Migające światło na całą stronę */
+    .flicker-light {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255, 255, 255, 0.08);
+      animation: flickerLight 10s infinite;
+      z-index: 5;
+    }
+    @keyframes flickerLight {
+      0%, 100% { opacity: 0; }
+      1%, 2% { opacity: 0.7; }
+      3%, 4% { opacity: 0; }
+    }
+
+    /* Postać - mignięcie w prawym dolnym rogu */
+    .figure {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      height: 220px;
+      background: url('https://i.imgur.com/UXYkGJb.png') no-repeat center center;
+      background-size: contain;
+      opacity: 0;
+      z-index: 20;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px #ff0000);
+      animation: appearFigure 6s forwards;
+      animation-delay: 15s; /* pojawi się po 15 sekundach */
+    }
+
+    @keyframes appearFigure {
+      0% { opacity: 0; transform: translateX(40px) scale(0.9); }
+      10% { opacity: 1; transform: translateX(0) scale(1); }
+      25% { opacity: 0; transform: translateX(0) scale(1); }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flicker-light"></div>
+  <div class="figure"></div>
+
+  <div class="panel">
+    <h1>📜 DZIEŃ 1 – Coś przyszło o 2:13</h1>
+
+    <p><strong>Notatka z kamery monitoringu:</strong><br>
+      2:13 – w korytarzu pojawia się postać. Nie rozpoznano twarzy. Kamera 04 zawiesza się na 4 sekundy.
+    </p>
+
+    <p><strong>Znalezisko:</strong><br>
+      Kartka z napisem: „Pokój 213 nie powinien istnieć”.
+    </p>
+  </div>
+
+  <!-- Opcjonalny szum tła - odkomentuj jeśli chcesz -->
+  <!--
+  <audio autoplay loop>
+    <source src="https://freesound.org/data/previews/250/250630_4486188-lq.mp3" type="audio/mpeg" />
+  </audio>
+  -->
+
+</body>
+</html>
