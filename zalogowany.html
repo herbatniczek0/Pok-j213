@@ -28,7 +28,7 @@
       height: 100vh;
       overflow: hidden;
       animation: backgroundFlicker 5s infinite;
-      padding: 20px; /* na małych ekranach */
+      padding: 20px;
     }
 
     @keyframes backgroundFlicker {
@@ -58,10 +58,6 @@
       gap: 20px;
       justify-content: center;
       max-width: 100%;
-    }
-
-    .buttons a {
-      text-decoration: none;
     }
 
     .buttons button {
@@ -121,15 +117,28 @@
       }
     }
   </style>
+  <script>
+    function checkPassword(day, url) {
+      const password = prompt('Podaj hasło, aby przejść do ' + day + ':');
+      // tutaj ustaw poprawne hasło, np. "tajne123"
+      const correctPassword = "tajne123";
+
+      if (password === correctPassword) {
+        window.location.href = url;
+      } else {
+        alert('Nieprawidłowe hasło!');
+      }
+    }
+  </script>
 </head>
 <body>
   <h1>WYBIERZ DZIEŃ</h1>
   <div class="buttons" role="navigation" aria-label="Wybór dnia">
-    <button type="button" onclick="location.href='day1.html'" aria-label="Dzień 1">Dzień 1</button>
-    <button type="button" onclick="location.href='day2.html'" aria-label="Dzień 2">Dzień 2</button>
-    <button type="button" onclick="location.href='day3.html'" aria-label="Dzień 3">Dzień 3</button>
-    <button type="button" onclick="location.href='day4.html'" aria-label="Dzień 4">Dzień 4</button>
-    <button type="button" onclick="location.href='day5.html'" aria-label="Dzień 5">Dzień 5</button>
+    <button type="button" onclick="checkPassword('Dzień 1', 'day1.html')" aria-label="Dzień 1">Dzień 1</button>
+    <button type="button" onclick="checkPassword('Dzień 2', 'day2.html')" aria-label="Dzień 2">Dzień 2</button>
+    <button type="button" onclick="checkPassword('Dzień 3', 'day3.html')" aria-label="Dzień 3">Dzień 3</button>
+    <button type="button" onclick="checkPassword('Dzień 4', 'day4.html')" aria-label="Dzień 4">Dzień 4</button>
+    <button type="button" onclick="checkPassword('Dzień 5', 'day5.html')" aria-label="Dzień 5">Dzień 5</button>
   </div>
 </body>
 </html>
