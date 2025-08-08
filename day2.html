@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>📜 DZIEŃ 2 – Nie otwieraj drzwi</title>
   <style>
-    /* Podstawowe style */
     body {
       margin: 0;
       padding: 2rem;
@@ -52,14 +51,12 @@
     strong {
       color: #ff3c3c;
     }
-    /* Migotanie tytułu */
     @keyframes flickerText {
       0%, 100% { opacity: 1; }
       45% { opacity: 0.6; }
       50% { opacity: 0.2; }
       55% { opacity: 0.6; }
     }
-    /* Efekt przesunięcia tekstu jak zepsuty monitor */
     @keyframes glitchShift {
       0% {
         left: 0;
@@ -98,7 +95,6 @@
           -2px 0 cyan;
       }
     }
-    /* Czerwone oczy */
     .eyes {
       position: fixed;
       top: 20%;
@@ -113,10 +109,29 @@
       z-index: 20;
       pointer-events: none;
       filter: drop-shadow(0 0 8px #ff0000);
+      will-change: opacity;
     }
     @keyframes eyesAppear {
       0%, 40%, 50%, 100% { opacity: 0; }
       45%, 48% { opacity: 1; }
+    }
+    @media (max-width: 480px) {
+      .eyes {
+        width: 120px;
+        height: 50px;
+        top: 25%;
+        margin-left: -60px;
+      }
+      .panel {
+        padding: 1.5rem 2rem;
+        max-width: 90%;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -130,9 +145,14 @@
 
   <div class="eyes" aria-hidden="true"></div>
 
-  <!-- Cichy dźwięk płaczu w tle -->
-  <audio autoplay loop volume="0.1">
+  <audio autoplay loop aria-label="Dźwięk płaczu w tle" id="bg-audio">
     <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_b9d9f3a5a3.mp3?filename=ghostly-sound-crying-10013.mp3" type="audio/mpeg" />
   </audio>
+
+  <script>
+    // Ustawiamy głośność dźwięku programowo, bo atrybut volume nie działa w HTML
+    const audio = document.getElementById('bg-audio');
+    audio.volume = 0.1;
+  </script>
 </body>
 </html>
