@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>⚠️ SYSTEM NIEAUTORYZOWANY</title>
   <style>
     body {
@@ -31,9 +31,20 @@
       color: #ff0033;
       cursor: pointer;
       border-radius: 6px;
-      animation: flicker 1s infinite;
+      animation-name: flicker;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
       text-transform: uppercase;
       letter-spacing: 2px;
+      user-select: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #loginBtn:hover,
+    #loginBtn:focus {
+      background-color: #ff0033;
+      color: #000;
+      outline: none;
     }
 
     @keyframes flicker {
@@ -61,6 +72,7 @@
       color: #00ff99;
       font-size: 22px;
       animation: pulse 0.8s infinite alternate, shake 1.2s infinite;
+      outline: none;
     }
 
     @keyframes pulse {
@@ -80,9 +92,9 @@
 <body>
 
   <div id="container">
-    <button id="loginBtn">ZALOGUJ SIĘ</button>
+    <button type="button" id="loginBtn">ZALOGUJ SIĘ</button>
 
-    <div id="logArea">
+    <div id="logArea" aria-live="polite">
       <div class="logLine">[1/10] Łamanie poświadczeń...</div>
       <div class="logLine">[2/10] Utracono kontrolę nad połączeniem...</div>
       <div class="logLine">[3/10] Wstrzyknięcie pakietu: ██████</div>
@@ -95,7 +107,7 @@
       <div class="logLine">[10/10] Jesteś obserwowany.</div>
     </div>
 
-    <div id="done">👁️ DOSTĘP PRZYZNANY. UCIEKAJ.</div>
+    <div id="done" tabindex="0">👁️ DOSTĘP PRZYZNANY. UCIEKAJ.</div>
   </div>
 
   <script>
@@ -103,22 +115,28 @@
     const logLines = document.querySelectorAll('.logLine');
     const done = document.getElementById('done');
 
-    loginBtn.addEventListener('click', () => {
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function startLoginSequence() {
+      loginBtn.disabled = true;
       loginBtn.style.display = 'none';
 
-      logLines.forEach((line, index) => {
-        setTimeout(() => {
-          line.style.display = 'block';
-        }, 700 * index);
-      });
+      for (let i = 0; i < logLines.length; i++) {
+        logLines[i].style.display = 'block';
+        await delay(700);
+      }
 
-      setTimeout(() => {
-        done.style.display = 'block';
-      }, 700 * logLines.length + 500);
+      done.style.display = 'block';
+      done.focus();
 
-      setTimeout(() => {
-        window.location.href = "zalogowany.html";
-      }, 700 * logLines.length + 4000);
+      await delay(4000);
+      window.location.href = "zalogowany.html";
+    }
+
+    loginBtn.addEventListener('click', () => {
+      if (!loginBtn.disabled) {
+        startLoginSequence();
+      }
     });
   </script>
 
