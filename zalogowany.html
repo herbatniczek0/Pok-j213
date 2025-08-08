@@ -10,13 +10,11 @@
       --red-light: #ff000055;
       --font-family: 'Courier New', monospace;
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background-color: #000;
       color: var(--red);
@@ -30,13 +28,11 @@
       animation: backgroundFlicker 5s infinite;
       padding: 20px;
     }
-
     @keyframes backgroundFlicker {
       0%, 100% { background-color: #000; }
       45% { background-color: #0a0a0a; }
       55% { background-color: #000; }
     }
-
     h1 {
       font-size: 3rem;
       margin-bottom: 50px;
@@ -44,14 +40,12 @@
       animation: textFlicker 1.5s infinite;
       will-change: opacity;
     }
-
     @keyframes textFlicker {
       0%, 100% { opacity: 1; }
       45% { opacity: 0.5; }
       50% { opacity: 0.2; }
       55% { opacity: 0.5; }
     }
-
     .buttons {
       display: flex;
       flex-wrap: wrap;
@@ -59,7 +53,6 @@
       justify-content: center;
       max-width: 100%;
     }
-
     .buttons button {
       background: transparent;
       border: 2px solid var(--red);
@@ -76,7 +69,6 @@
       user-select: none;
       min-width: 120px;
     }
-
     .buttons button:hover,
     .buttons button:focus {
       background-color: var(--red);
@@ -84,7 +76,6 @@
       outline: none;
       text-shadow: none;
     }
-
     .buttons button::before {
       content: '';
       position: absolute;
@@ -97,19 +88,16 @@
       z-index: -1;
       border-radius: 6px;
     }
-
     @keyframes glow {
       0% { opacity: 0.2; }
       50% { opacity: 1; }
       100% { opacity: 0.2; }
     }
-
     @media (max-width: 480px) {
       h1 {
         font-size: 2rem;
         margin-bottom: 30px;
       }
-
       .buttons button {
         font-size: 1rem;
         padding: 15px 20px;
@@ -117,13 +105,42 @@
       }
     }
   </style>
-  <script>
-    function checkPassword(day, url) {
-      const password = prompt('Podaj hasło, aby przejść do ' + day + ':');
-      // tutaj ustaw poprawne hasło, np. "tajne123"
-      const correctPassword = "tajne123";
 
-      if (password === correctPassword) {
+  <script>
+    // Hashe SHA-256 haseł do dni (HEX)
+    // Hasła do przykładu (zmień wg potrzeb):
+    // Dzień 1: "haslo1"
+    // Dzień 2: "tajne2"
+    // Dzień 3: "kod3"
+    // Dzień 4: "secret4"
+    // Dzień 5: "pass5"
+
+    const passwordHashes = {
+      "day1.html": "88c6b2e034efec8343b29f1a2a167a3b71f68a0f5e1307b17414f682ea65f33b", // "haslo1"
+      "day2.html": "39b65b1d3c285b7de59b7b43ad61ad6c0e2e0c3f5d1d50a49df7a5d0d4bb7c12", // "tajne2"
+      "day3.html": "23cc5a6a2e158aa675ea258bb2360e4f9c7d9ac401ed86a2f55336bf06ae2e8b", // "kod3"
+      "day4.html": "f3d7e3226e840a6f5a27988e4fa4e211c6a2189d93f99105f2c9e7bbdf13e6f3", // "secret4"
+      "day5.html": "7e175437118d92a3f3711a0235ae9a2d5cc2876b232176f9e8aaacccf08db32a"  // "pass5"
+    };
+
+    // Konwersja ArrayBuffer na HEX string
+    function bufferToHex(buffer) {
+      return [...new Uint8Array(buffer)]
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    async function checkPassword(day, url) {
+      const input = prompt(`Podaj hasło, aby przejść do ${day}:`);
+      if (input === null) return; // Anulowano prompt
+
+      // Oblicz hash SHA-256 wpisanego hasła
+      const encoder = new TextEncoder();
+      const data = encoder.encode(input);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashHex = bufferToHex(hashBuffer);
+
+      if (passwordHashes[url] === hashHex) {
         window.location.href = url;
       } else {
         alert('Nieprawidłowe hasło!');
