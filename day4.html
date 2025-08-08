@@ -64,7 +64,8 @@
       font-style: italic;
       text-shadow:
         0 0 5px #bbb,
-        0 0 10px #ccc;
+        0 0 10px #ccc,
+        0 0 15px #0008;
       user-select: none;
     }
     @keyframes whisperUp {
@@ -100,7 +101,7 @@
     <p><strong>Zapis nagrania z mikrofonu:</strong><br />
       „W pokoju... było za cicho. Tak bardzo, że słyszałem bicie własnego serca. A potem... w tej ciszy... głos. Kobiecy. Mówiła moje imię. Trzy razy. Zanim przestałem słyszeć cokolwiek.”</p>
     <p><strong>Na ekranie monitora pojawił się napis:</strong> 5IL3NC3.</p>
-    <p class="whisper">„Mów moje imię... mów moje imię... mów moje imię...”</p>
+    <p class="whisper" aria-live="polite">„Mów moje imię... mów moje imię... mów moje imię...”</p>
   </div>
 
   <!-- Dźwięk białych szumów -->
@@ -109,12 +110,14 @@
   </audio>
 
   <script>
-    // Stopniowe wyciszenie całej strony (audio + treść) po 20 sekundach
     const audio = document.getElementById('whiteNoise');
     const content = document.getElementById('content');
 
+    audio.volume = 0.7; // ustaw początkową głośność na 70%
+
+    // Stopniowe wyciszenie całej strony (audio + treść) po 20 sekundach
     function fadeOut() {
-      let vol = 1;
+      let vol = audio.volume;
       let opacity = 1;
       const interval = setInterval(() => {
         vol -= 0.02;
@@ -129,7 +132,6 @@
       }, 100);
     }
 
-    // Wywołaj fadeOut po 20 sekundach od załadowania strony
     setTimeout(fadeOut, 20000);
   </script>
 </body>
