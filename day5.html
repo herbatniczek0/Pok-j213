@@ -1,224 +1,340 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>📜 DZIEŃ 5 – Echo śmierci</title>
+<meta name="description" content="Dzień 5 - Echo śmierci. Pokój 213 wysłał sygnał dźwiękowy. Tryb migający można wyłączyć." />
 <style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Courier New', monospace;
-    background: #111;
+  :root{
+    --bg:#0e0e0e;
+    --panel-bg: rgba(6,6,6,0.88);
+    --accent:#ff5555;
+    --muted:#bdbdbd;
+    --glass: rgba(255,255,255,0.02);
+    --max-width: 900px;
+  }
+
+  /* Reset */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Courier New", monospace;
+    background: linear-gradient(180deg,#0b0b0b 0%, #141414 60%), url('https://i.imgur.com/xhDqJvI.jpg') center/cover no-repeat fixed;
     color: #eee;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    user-select: none;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    transition: background-color .35s ease, color .35s ease;
   }
 
-  .container {
-    max-width: 800px;
-    background: rgba(0,0,0,0.85);
-    padding: 2rem 3rem;
-    border-radius: 12px;
-    box-shadow: 0 0 40px #fff;
-    z-index: 10;
-    position: relative;
-    animation: glitch 3s infinite;
-    transition: box-shadow 0.5s ease, color 0.5s ease;
+  /* Vignette to focus content */
+  .vignette{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    box-shadow: inset 0 60px 120px rgba(0,0,0,0.8), inset 0 -60px 120px rgba(0,0,0,0.8);
+    z-index:0;
   }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #f0f0f0;
-    text-shadow: 0 0 10px #fff;
+  /* Page wrapper */
+  .wrap{
+    position:relative;
+    z-index:5;
+    width:100%;
+    max-width:var(--max-width);
+    display:flex;
+    gap:20px;
+    align-items:stretch;
+    justify-content:center;
   }
 
-  p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 4px #aaa;
+  /* Panel with content */
+  .panel{
+    width:100%;
+    background:var(--panel-bg);
+    border-radius:12px;
+    padding:28px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 24px rgba(255,85,85,0.06);
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--muted);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    /* ensure header never gets cut */
+    max-height: calc(100vh - 64px);
   }
 
-  strong {
-    color: #ff5555;
+  /* internal scroll for long content */
+  .panel .content{
+    overflow-y:auto;
+    padding-right:8px;
+    -webkit-overflow-scrolling:touch;
   }
 
-  @keyframes glitch {
-    0% {
-      clip-path: inset(0 0 0 0);
-      transform: translate(0);
-      filter: none;
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan;
-    }
-    20% {
-      clip-path: inset(10% 0 80% 0);
-      transform: translate(-5px, -3px);
-      filter: hue-rotate(10deg);
-      text-shadow:
-        -2px 0 red,
-        2px 0 cyan;
-    }
-    40% {
-      clip-path: inset(50% 0 10% 0);
-      transform: translate(5px, 3px);
-      filter: hue-rotate(-10deg);
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan;
-    }
-    60% {
-      clip-path: inset(20% 0 70% 0);
-      transform: translate(-3px, 2px);
-      filter: hue-rotate(15deg);
-      text-shadow:
-        -2px 0 red,
-        2px 0 cyan;
-    }
-    80% {
-      clip-path: inset(10% 0 80% 0);
-      transform: translate(3px, -2px);
-      filter: hue-rotate(-15deg);
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan;
-    }
-    100% {
-      clip-path: inset(0 0 0 0);
-      transform: translate(0);
-      filter: none;
-      text-shadow:
-        2px 0 red,
-        -2px 0 cyan;
-    }
+  h1{
+    margin:0 0 6px 0;
+    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+    color: #f6f6f6;
+    text-shadow: 0 0 10px rgba(255,255,255,0.05);
   }
 
-  @keyframes flashBG {
-    0%, 100% { background-color: #111; }
-    50% { background-color: #fff; }
+  .lead{
+    color:#ddd;
+    font-size:1rem;
+    line-height:1.45;
+    margin-bottom:4px;
   }
 
-  body.flash-bg {
+  p{ margin:0 0 12px 0; color: #dcdcdc; line-height:1.6; font-size:1rem; }
+
+  strong{ color:var(--accent); }
+
+  /* Subtle glitch (less aggressive) */
+  .glitch {
+    position:relative;
+    display:inline-block;
+  }
+  .glitch::before, .glitch::after{
+    content:attr(data-text);
+    position:absolute;
+    left:0; top:0;
+    width:100%;
+    overflow:hidden;
+    clip-path: inset(0 0 0 0);
+    opacity:0.85;
+    pointer-events:none;
+  }
+  .glitch::before{
+    transform:translate(2px, -1px);
+    color: rgba(255,0,0,0.9);
+    mix-blend-mode:screen;
+    filter: blur(.6px);
+    animation: g1 3s infinite linear;
+  }
+  .glitch::after{
+    transform:translate(-2px, 1px);
+    color: rgba(0,200,255,0.85);
+    mix-blend-mode:screen;
+    filter: blur(.6px);
+    animation: g2 3.4s infinite linear;
+  }
+
+  @keyframes g1{
+    0%{ clip-path: inset(0 0 0 0) }
+    10%{ clip-path: inset(0 0 75% 0) }
+    20%{ clip-path: inset(40% 0 0 0) }
+    40%{ clip-path: inset(0 0 0 0) }
+    100%{ clip-path: inset(0 0 0 0) }
+  }
+  @keyframes g2{
+    0%{ clip-path: inset(0 0 0 0) }
+    15%{ clip-path: inset(60% 0 0 0) }
+    30%{ clip-path: inset(0 0 55% 0) }
+    50%{ clip-path: inset(0 0 0 0) }
+    100%{ clip-path: inset(0 0 0 0) }
+  }
+
+  /* Controls area (audio + toggle) */
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    justify-content:flex-end;
+    margin-bottom:6px;
+  }
+
+  .btn{
+    background:#111;
+    border:1px solid rgba(255,85,85,0.12);
+    color:var(--accent);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:monospace;
+    font-size:0.9rem;
+  }
+  .btn:focus{ outline:2px solid rgba(255,85,85,0.18) }
+
+  .audio-controls{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    font-size:0.9rem;
+    color:#ddd;
+  }
+  .audio-controls input[type="range"]{ width:110px; }
+
+  /* flash BG - apply to body but subtle */
+  body.flash-bg{
     animation: flashBG 1s infinite;
   }
-
-  /* Tryb bez migania */
-  body.no-flash {
-    animation: none !important;
-    background-color: #111 !important;
-    color: #eee !important;
-  }
-  body.no-flash .container {
-    animation: none !important;
-    box-shadow: 0 0 20px #555 !important;
-    color: #eee !important;
-    text-shadow: none !important;
+  @keyframes flashBG{
+    0%,100%{ filter:none }
+    50%{ filter:brightness(1.25) saturate(1.05) }
   }
 
-  /* Przycisk trybu */
-  #toggleFlash {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    background: #222;
-    border: 2px solid #ff5555;
-    color: #ff5555;
-    font-family: monospace;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-    z-index: 200;
-    transition: background-color 0.3s, color 0.3s;
+  /* No-flash override */
+  body.no-flash{ animation:none !important; filter:none !important; }
+  body.no-flash .glitch::before, body.no-flash .glitch::after{ display:none }
+
+  /* small screens */
+  @media (max-width:720px){
+    .wrap{ padding:0 6px }
+    .panel{ padding:18px; max-height: calc(100vh - 48px) }
+    .audio-controls input[type="range"]{ width:80px }
+    .controls{ justify-content:space-between }
   }
-  #toggleFlash:hover {
-    background: #ff5555;
-    color: #222;
+
+  /* respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .glitch::before, .glitch::after, body.flash-bg, .panel{ animation:none !important }
+    *{ transition:none !important }
   }
 </style>
 </head>
 <body>
-  <button id="toggleFlash" aria-pressed="true" aria-label="Wyłącz migające efekty">Tryb bez migania</button>
+  <div class="vignette" aria-hidden="true"></div>
 
-  <div class="container" role="main" aria-label="Opis dnia 5">
-    <h1>📜 DZIEŃ 5 – Echo śmierci</h1>
-    <p><strong>Ostatni raport służb technicznych:</strong><br/>
-    „Pokój 213 wysłał sygnał dźwiękowy na częstotliwości 2.13 MHz. Brak źródła emisji. Każdy, kto go słuchał, miał później halucynacje.”</p>
-    <p><strong>Na podłodze:</strong><br/>
-    „Słyszysz? To twoje echo...”<br/>
-    <strong>Kod:</strong> ECH0-213</p>
+  <div class="wrap" role="main">
+    <div class="panel" aria-label="Opis dnia 5">
+      <div class="controls" aria-hidden="false">
+        <div class="audio-controls" aria-label="Kontrola dźwięku">
+          <button id="audioToggle" class="btn" title="Wstrzymaj / wznow audio">⏯️ Pauza</button>
+          <label style="display:flex;gap:8px;align-items:center;font-size:0.9rem;color:#ccc">
+            Głośność
+            <input id="volume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Poziom głośności"/>
+          </label>
+        </div>
+
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button id="toggleFlash" class="btn" aria-pressed="true" aria-label="Wyłącz migające efekty">Tryb bez migania</button>
+        </div>
+      </div>
+
+      <div class="content" tabindex="0">
+        <h1><span class="glitch" data-text="📜 DZIEŃ 5 – Echo śmierci">📜 DZIEŃ 5 – Echo śmierci</span></h1>
+
+        <p class="lead"><strong>Ostatni raport służb technicznych:</strong></p>
+        <p>„Pokój 213 wysłał sygnał dźwiękowy na częstotliwości <strong>2.13 MHz</strong>. Brak źródła emisji. Każdy, kto go słuchał, miał później halucynacje.”</p>
+
+        <p class="lead"><strong>Na podłodze:</strong></p>
+        <p>„Słyszysz? To twoje echo...”<br/><strong>Kod:</strong> <code style="color:var(--accent)">ECH0-213</code></p>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:16px 0" />
+
+        <p style="color:#cfcfcf;font-size:.95rem">Ten panel ma przewijanie jeśli zawartość stanie się dłuższa — nagłówek nie zostanie obcięty. Możesz wyłączyć efekty migające przyciskiem powyżej. Preferencje są zapamiętywane.</p>
+      </div>
+    </div>
   </div>
 
-  <audio id="distortedAudio" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/02/22/audio_3766ccf825.mp3?filename=distorted-voice-effect-1370.mp3" type="audio/mpeg" />
+  <!-- Audio -->
+  <audio id="distortedAudio" loop crossorigin="anonymous">
+    <source src="https://cdn.pixabay.com/download/audio/2022/02/22/audio_3766ccf825.mp3?filename=distorted-voice-effect-1370.mp3" type="audio/mpeg">
+    Twoja przeglądarka nie obsługuje audio.
   </audio>
 
-  <script>
-    const body = document.body;
-    const container = document.querySelector('.container');
-    const toggleBtn = document.getElementById('toggleFlash');
-    const audio = document.getElementById('distortedAudio');
+<script>
+  // Elementy
+  const body = document.body;
+  const toggleBtn = document.getElementById('toggleFlash');
+  const audio = document.getElementById('distortedAudio');
+  const audioToggle = document.getElementById('audioToggle');
+  const volume = document.getElementById('volume');
 
-    // Start w trybie bez migania, potem po 2s przełącz na migający (chyba że user wyłączy)
-    function enableNoFlash() {
+  // Load preferences
+  function loadMode(){
+    const noFlash = localStorage.getItem('noFlashMode') === 'true';
+    if(noFlash){
       body.classList.add('no-flash');
       body.classList.remove('flash-bg');
       toggleBtn.textContent = 'Tryb migający';
-      toggleBtn.setAttribute('aria-pressed', 'true');
-      container.style.animation = 'none';
-      audio.volume = 0.15;
-    }
-
-    function enableFlash() {
+      toggleBtn.setAttribute('aria-pressed','false');
+    } else {
       body.classList.remove('no-flash');
       body.classList.add('flash-bg');
       toggleBtn.textContent = 'Tryb bez migania';
-      toggleBtn.setAttribute('aria-pressed', 'false');
-      container.style.animation = '';
-      audio.volume = 1;
+      toggleBtn.setAttribute('aria-pressed','true');
     }
+  }
 
-    // Na start wymuszone no-flash
-    enableNoFlash();
-
-    // Po 2 sekundach, jeśli user nie zmienił trybu, włącz miganie
-    setTimeout(() => {
-      if (body.classList.contains('no-flash') && toggleBtn.getAttribute('aria-pressed') === 'true') {
-        enableFlash();
-        localStorage.setItem('noFlashMode', 'false');
-      }
-    }, 2000);
-
-    // Obsługa przycisku i localStorage
-    function loadMode() {
-      const noFlash = localStorage.getItem('noFlashMode') === 'true';
-      if (noFlash) {
-        enableNoFlash();
-      } else {
-        enableFlash();
-      }
+  // Toggle handler
+  toggleBtn.addEventListener('click', () => {
+    if(body.classList.contains('no-flash')){
+      localStorage.setItem('noFlashMode','false');
+      body.classList.remove('no-flash');
+      body.classList.add('flash-bg');
+      toggleBtn.textContent = 'Tryb bez migania';
+      toggleBtn.setAttribute('aria-pressed','true');
+    } else {
+      localStorage.setItem('noFlashMode','true');
+      body.classList.add('no-flash');
+      body.classList.remove('flash-bg');
+      toggleBtn.textContent = 'Tryb migający';
+      toggleBtn.setAttribute('aria-pressed','false');
     }
+  });
 
-    toggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('no-flash')) {
-        localStorage.setItem('noFlashMode', 'false');
-        enableFlash();
-      } else {
-        localStorage.setItem('noFlashMode', 'true');
-        enableNoFlash();
-      }
+  // Audio controls (respect autoplay policy: try to play, but users may need interaction)
+  audio.volume = parseFloat(localStorage.getItem('audioVolume')) || 0.7;
+  volume.value = audio.volume;
+
+  // Try auto play (may be blocked)
+  function tryPlay(){
+    audio.play().then(()=> {
+      audioToggle.textContent = '⏯️ Pauza';
+    }).catch(()=> {
+      audioToggle.textContent = '⏯️ Odtwórz';
+      // audio will play once user clicks
     });
+  }
+  tryPlay();
 
-    // Załaduj stan z localStorage jeśli jest (nadpisze startowy no-flash)
-    window.addEventListener('load', loadMode);
-  </script>
+  audioToggle.addEventListener('click', () => {
+    if(audio.paused){
+      audio.play();
+      audioToggle.textContent = '⏯️ Pauza';
+    } else {
+      audio.pause();
+      audioToggle.textContent = '⏯️ Odtwórz';
+    }
+  });
+
+  volume.addEventListener('input', (e)=>{
+    const v = parseFloat(e.target.value);
+    audio.volume = v;
+    localStorage.setItem('audioVolume', String(v));
+  });
+
+  // Respect reduced motion preference at runtime
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function handleReducedMotion(){
+    if(mq.matches){
+      body.classList.add('no-flash');
+      body.classList.remove('flash-bg');
+    } else {
+      // restore user preference
+      loadMode();
+    }
+  }
+  mq.addEventListener ? mq.addEventListener('change', handleReducedMotion) : mq.addListener(handleReducedMotion);
+
+  // init
+  handleReducedMotion();
+  loadMode();
+
+  // Accessibility: keyboard shortcut "M" toggles flash
+  window.addEventListener('keydown', (e)=>{
+    if(e.key.toLowerCase() === 'm' && (e.ctrlKey || e.metaKey) === false){
+      e.preventDefault();
+      toggleBtn.click();
+    }
+  });
+</script>
 </body>
 </html>
